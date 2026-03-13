@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>TOOL LNHAT</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(180deg,#001a1a,#003333,#004d4d);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+overflow:hidden;
+}
+
+.container{
+width:92%;
+max-width:420px;
+text-align:center;
+z-index:2;
+backdrop-filter:blur(12px);
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:25px;
+}
+
+.title{
+font-size:34px;
+font-weight:bold;
+letter-spacing:2px;
+margin-bottom:10px;
+text-shadow:0 0 10px #00ffe5,0 0 20px #00ffe5,0 0 40px #00ffd5;
+}
+
+.timer{
+color:#ffd700;
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:16px;
+border-radius:30px;
+border:none;
+margin-bottom:15px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:16px;
+margin:8px 0;
+border:none;
+border-radius:30px;
+font-size:18px;
+font-weight:bold;
+background:linear-gradient(90deg,#5df2c5,#7ad8ff);
+box-shadow:0 0 15px rgba(0,255,200,0.7),0 0 40px rgba(0,255,255,0.5);
+cursor:pointer;
+}
+
+#tool{display:none;}
+
+.playerBox img{
+width:200px;
+height:200px;
+border-radius:20px;
+border:3px solid #00ffe5;
+object-fit:contain;
+background:black;
+margin-bottom:10px;
+}
+
+.progress{
+width:100%;
+background:#111;
+border-radius:20px;
+margin:10px 0;
+overflow:hidden;
+display:none;
+}
+
+.bar{
+height:10px;
+width:0%;
+background:#00ffe5;
+}
+
+.console{
+width:100%;
+height:170px;
+background:#000;
+border-radius:15px;
+margin-top:15px;
+padding:12px;
+text-align:left;
+font-family:monospace;
+font-size:14px;
+color:#00ff66;
+overflow:auto;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas> <canvas id="stars"></canvas> <canvas id="sakura"></canvas>
+
+<div class="container">
+
+<div class="title">TOOL LNHAT</div>
+
+<div id="keyscreen">
+
+<p>Mua key vip ib tt: <b>._.longnhat</b></p>
+
+<input id="keyinput" placeholder="Nhập key">
+
+<button onclick="enterTool()">XÁC NHẬN</button>
+
+</div>
+
+<div id="tool">
+
+<div class="timer">
+Thời gian sử dụng: <span id="time"></span>
+</div>
+
+<input id="idgame" placeholder="Nhập ID Game">
+
+<button onclick="login()">ĐĂNG NHẬP</button>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div id="name">Tên nick: ---</div>
+
+<button onclick="checkMail()">CHECK MAIL XT</button> <button onclick="spamLogin()">SPAM LOGIN</button> <button onclick="changeMail()">CHANGE MAIL</button> <button onclick="bandAccount()">BAND 15 DAY</button>
+
+<div class="console" id="console"></div>
+
+</div>
+
+</div>
+
+<script>
+
+/* KEY SYSTEM */
+
+function enterTool(){
+
+let key=document.getElementById("keyinput").value.trim();
+let expire=null;
+
+if(key==="LNHATVIP01"){expire=86400000;}
+else if(key==="THINGAY"){expire=3600000;}
+else if(key==="KOCHO"){expire="infinite";}
+else{alert("Key sai");return;}
+
+if(expire==="infinite"){
+
+localStorage.setItem("toolExpire","infinite");
+
+}else{
+
+let end=Date.now()+expire;
+localStorage.setItem("toolExpire",end);
+
+}
+
+document.getElementById("keyscreen").style.display="none";
+document.getElementById("tool").style.display="block";
+
+startTimer();
+
+}
+
+/* TIMER */
+
+function startTimer(){
+
+let expire=localStorage.getItem("toolExpire");
+
+if(expire==="infinite"){
+
+document.getElementById("time").innerHTML="∞ VĨNH VIỄN";
+return;
+
+}
+
+setInterval(function(){
+
+let remain=expire-Date.now();
+
+if(remain<=0){
+
+alert("Key hết hạn");
+localStorage.removeItem("toolExpire");
+location.reload();
+
+}
+
+let h=Math.floor(remain/3600000);
+let m=Math.floor((remain%3600000)/60000);
+let s=Math.floor((remain%60000)/1000);
+
+document.getElementById("time").innerHTML=
+h+":"+(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
+
+},1000);
+
+}
+
+/* DATABASE */
+
+let data = {
+
+"9375513807":{
+name:"TNH_LONG",
+level:52,
+avatar:"https://i.postimg.cc/90zXz2FS/51CAF51A-8024-4F84-809E-CBA14A18E0F2.jpg"
+},
+
+"8521049323":{
+name:"pathenic ϟϟϟ",
+level:53,
+avatar:"https://i.postimg.cc/Pqz5RKR8/E70FF0E8-7503-4E5C-9B81-184CB667AD26.jpg"
+},
+
+"9799697502":{
+name:"♧ ẩn_danh 《♧",
+level:45,
+avatar:"https://i.postimg.cc/Fs8zdYSf/C9C5F5B4-BB04-4EC7-8A48-4FCB6015AF0C.jpg"
+},
+
+"6691390926":{
+name:"LOVEQZY'..و",
+level:51,
+avatar:"https://i.postimg.cc/KjmLWRfM/709F046E-0B27-4A5C-A809-810912EDB033.jpg"
+},
+
+"356859880":{
+name:"౨ৎʟɪɴʜđᴀɴ〄",
+level:65,
+avatar:"https://i.postimg.cc/6qQqRRzv/51EFA577-6F99-47CE-B3D5-2284F6CB9D3E.jpg"
+}
+
+};
+
+/* LOGIN */
+
+function login(){
+
+let id=document.getElementById("idgame").value.trim();
+let bar=document.getElementById("bar");
+let progress=document.querySelector(".progress");
+
+progress.style.display="block";
+bar.style.width="0%";
+
+let percent=0;
+
+let load=setInterval(function(){
+
+percent+=10;
+bar.style.width=percent+"%";
+
+if(percent>=100){
+
+clearInterval(load);
+progress.style.display="none";
+
+showPlayer();
+
+}
+
+},120);
+
+function showPlayer(){
+
+if(data[id]){
+
+let p=data[id];
+
+document.getElementById("name").innerHTML=`
+<div class="playerBox">
+<img src="${p.avatar}">
+<br>
+UID: ${id}<br>
+Tên: ${p.name}<br>
+Level: ${p.level}
+</div>
+`;
+
+}else{
+
+document.getElementById("name").innerHTML="Không tìm thấy ID";
+
+}
+
+}
+
+}
+
+/* CONSOLE */
+
+function log(t){
+let box=document.getElementById("console");
+box.innerHTML+=t+"<br>";
+box.scrollTop=box.scrollHeight;
+}
+
+/* CHECK MAIL */
+
+function checkMail(){
+
+let logs=[
+"[+] Connecting server...",
+"[+] Checking mail verify...",
+"[+] Mail tiens12sss@gmail.com",
+"[+] Status: VERIFIED",
+"[+] Pass Account: 090912"
+];
+
+logs.forEach((l,i)=>{
+setTimeout(()=>log(l),i*300);
+});
+
+}
+
+function spamLogin(){
+["[SYSTEM] Sending packets...","[SYSTEM] Spam done"].forEach((l,i)=>setTimeout(()=>log(l),i*300));
+}
+
+function changeMail(){
+["[SYSTEM] Removing old mail...","[SYSTEM] Setting new mail"].forEach((l,i)=>setTimeout(()=>log(l),i*300));
+}
+
+function bandAccount(){
+["[SYSTEM] Applying punishment...","[SYSTEM] Account banned 15 days"].forEach((l,i)=>setTimeout(()=>log(l),i*300));
+}
+
+/* MATRIX */
+
+let matrix=document.getElementById("matrix");
+let ctx=matrix.getContext("2d");
+
+matrix.width=window.innerWidth;
+matrix.height=window.innerHeight;
+
+let letters="01アイウエオカキクケコ".split("");
+let font=14;
+let columns=matrix.width/font;
+let drops=[];
+
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function drawMatrix(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,matrix.width,matrix.height);
+
+ctx.fillStyle="#0f0";
+ctx.font=font+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*font,drops[i]*font);
+
+if(drops[i]*font>matrix.height && Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(drawMatrix,33);
+
+/* STARS */
+
+let starCanvas=document.getElementById("stars");
+let starCtx=starCanvas.getContext("2d");
+
+starCanvas.width=window.innerWidth;
+starCanvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<120;i++){
+stars.push({x:Math.random()*starCanvas.width,y:Math.random()*starCanvas.height,size:Math.random()*2});
+}
+
+function drawStars(){
+
+starCtx.clearRect(0,0,starCanvas.width,starCanvas.height);
+starCtx.fillStyle="white";
+
+stars.forEach(s=>{
+starCtx.beginPath();
+starCtx.arc(s.x,s.y,s.size,0,Math.PI*2);
+starCtx.fill();
+s.y+=0.2;
+if(s.y>starCanvas.height){s.y=0;s.x=Math.random()*starCanvas.width;}
+});
+
+requestAnimationFrame(drawStars);
+
+}
+
+drawStars();
+
+/* SAKURA */
+
+let sakuraCanvas=document.getElementById("sakura");
+let sakuraCtx=sakuraCanvas.getContext("2d");
+
+sakuraCanvas.width=window.innerWidth;
+sakuraCanvas.height=window.innerHeight;
+
+let petals=[];
+
+for(let i=0;i<30;i++){
+petals.push({x:Math.random()*sakuraCanvas.width,y:Math.random()*sakuraCanvas.height,size:Math.random()*6+4,speed:Math.random()*1+0.5});
+}
+
+function drawPetals(){
+
+sakuraCtx.clearRect(0,0,sakuraCanvas.width,sakuraCanvas.height);
+sakuraCtx.fillStyle="pink";
+
+petals.forEach(p=>{
+sakuraCtx.beginPath();
+sakuraCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+sakuraCtx.fill();
+p.y+=p.speed;
+p.x+=Math.sin(p.y*0.01);
+if(p.y>sakuraCanvas.height){p.y=0;p.x=Math.random()*sakuraCanvas.width;}
+});
+
+requestAnimationFrame(drawPetals);
+
+}
+
+drawPetals();
+
+</script>
+
+</body>
+</html>
